@@ -1,0 +1,46 @@
+body {
+  padding: 0; margin: 0;
+}
+
+canvas {
+  vertical-align: top;
+}
+
+.container {
+  position: relative;
+  left: 80px;
+  top: 50px;
+}
+
+.baseText {
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+h3 {
+  @extend .baseText;
+  font-size: 20px;
+  color: #4b4b4b;
+}
+
+.baseParagraph {
+  font-size: 15px;
+}
+
+p {
+  @extend .baseText, .baseParagraph;
+  font-weight: 100;
+  color: #77787E;
+}
+
+.result {
+  @extend .baseText, .baseParagraph;
+  position: relative;
+  top: 50px;
+  font-weight: 500;
+  color: #eb105a;
+}
+
+.para {
+  @extend p;
+  font-weight: 600;
+}
