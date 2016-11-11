@@ -8,7 +8,7 @@ canvas {
 .container {
   position: relative;
   left: 80px;
-  top: 50px; }
+  top: 40px; }
 
 .baseText, h3, p, .para, .result {
   font-family: Helvetica, Arial, sans-serif; }
@@ -26,11 +26,41 @@ p, .para {
 
 .result {
   position: relative;
-  top: 50px;
+  top: 40px;
   font-weight: 500;
   color: #eb105a; }
 
 .para {
   font-weight: 600; }
+
+.btn:focus {
+  outline: 0; }
+
+.btn {
+  width: 100px;
+  height: 40px;
+  margin-right: 7px;
+  background: #ebeef0;
+  background-image: -webkit-linear-gradient(top, #f5f2f0, #e8eaeb);
+  background-image: -moz-linear-gradient(top, #f5f2f0, #e8eaeb);
+  background-image: -ms-linear-gradient(top, #f5f2f0, #e8eaeb);
+  background-image: -o-linear-gradient(top, #f5f2f0, #e8eaeb);
+  background-image: linear-gradient(to bottom, #f5f2f0, #e8eaeb);
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 4px;
+  font-family: Helvetica, Arial, sans-serif;
+  color: #918c91;
+  font-size: 12px;
+  text-decoration: none; }
+
+.btn:hover {
+  background: #CECCCD;
+  background-image: -webkit-linear-gradient(top, #F5F2F3, #CECCCD);
+  background-image: -moz-linear-gradient(top, #F5F2F3, #CECCCD);
+  background-image: -ms-linear-gradient(top, #F5F2F3, #CECCCD);
+  background-image: -o-linear-gradient(top, #F5F2F3, #CECCCD);
+  background-image: linear-gradient(to bottom, #F5F2F3, #CECCCD);
+  text-decoration: none; }
 
 /*# sourceMappingURL=style.css.map */
