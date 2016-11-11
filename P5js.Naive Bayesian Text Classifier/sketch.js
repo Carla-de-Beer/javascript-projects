@@ -3,7 +3,6 @@
 // November 2016
 // Inspired by Daniel Shiffman's Coding Rainbow series:
 // http://shiffman.net/a2z/intro/
-// Built with P5.js
 
 var dictionary = {};
 var tokenCountA = 0;
@@ -16,30 +15,93 @@ var newWords;
 var result = [];
 var headerText;
 
-var trainingSet = [
-	{
-		path: "Business/B-03.txt",
-		category: "A"
-	}, {
-		path: "Business/B-05.txt",
-		category: "A"
-	}, {
-		path: "Business/B-09.txt",
-		category: "A"
-	},{
-		path: "Sport/S-03.txt",
-		category: "B"
-	}, {
-		path: "Sport/S-05.txt",
-		category: "B"
-	}, {
-		path: "Sport/S-09.txt",
-		category: "B"
-	}
-];
+function train2() {
 
-function setup() {
-  	noCanvas();
+	resetGlobals();
+
+	var trainingSet = [
+		{
+			path: "Business/B-02.txt",
+			category: "A"
+		}, {
+			path: "Sport/S-02.txt",
+			category: "B"
+		}
+	];
+
+	// Train the classifier
+	for (var i = 0, l = trainingSet.length; i < l; ++i) {
+		var text = readTextFile("textFiles/" + trainingSet[i].path);
+		var object = {
+			text: text,
+			category: trainingSet[i].category
+		};
+
+		countWords(object);
+	}
+
+	calculateProbabilities();
+}
+
+function train10() {
+
+	resetGlobals();
+
+	var trainingSet = [
+		{
+			path: "Business/B-02.txt",
+			category: "A"
+		}, {
+			path: "Business/B-03.txt",
+			category: "A"
+		}, {
+			path: "Business/B-05.txt",
+			category: "A"
+		}, {
+			path: "Business/B-07.txt",
+			category: "A"
+		}, {
+			path: "Business/B-09.txt",
+			category: "A"
+		}, {
+			path: "Sport/S-02.txt",
+			category: "B"
+		}, {
+			path: "Sport/S-03.txt",
+			category: "B"
+		}, {
+			path: "Sport/S-05.txt",
+			category: "B"
+		}, {
+			path: "Sport/S-07.txt",
+			category: "B"
+		}, {
+			path: "Sport/S-09.txt",
+			category: "B"
+		}
+	];
+
+	// Train the classifier
+	for (var i = 0, l = trainingSet.length; i < l; ++i) {
+		var text = readTextFile("textFiles/" + trainingSet[i].path);
+		var object = {
+			text: text,
+			category: trainingSet[i].category
+		};
+
+		countWords(object);
+	}
+
+	calculateProbabilities();
+}
+
+function resetGlobals() {
+	dictionary = {};
+	tokenCountA = 0;
+	tokenCountB = 0;
+	docCountA = 0;
+	docCountB = 0;
+	result = [];
 }
 
 function chooseText(id) {
@@ -80,36 +142,26 @@ function doStuff(filePath, callback) {
 	}
 
 	setTimeout(function() {
-
 		var unknown = readTextFile(filePath);
-
-		// Train the classifier:
 		newWords = unknown.split(/\W+/);
 
-		for (var i = 0, l = trainingSet.length; i < l; ++i) {
-
-			var text = readTextFile("textFiles/" + trainingSet[i].path);
-			var object = {
-				text: text,
-				category: trainingSet[i].category
-			};
-
-			countWords(object);
-		}
-
-		calculateProbabilities();
 		combineProbablities();
 		renderOutput(filePath);
-
 	}, 5);
+
 }
 
 function readFirstLine(filePath) {
-	var XHR = new XMLHttpRequest();
-	XHR.open("GET", filePath, true);
-	XHR.send();
-	XHR.onload = function (){
-		headerText = XHR.responseText.slice(0, XHR.responseText.indexOf("\n"));
+	var rawFile = new XMLHttpRequest();
+	rawFile.open("GET", filePath, true);
+	rawFile.send();
+
+	rawFile.onreadystatechange = function () {
+		if(rawFile.readyState === XMLHttpRequest.DONE) {
+			if(rawFile.status === 200 || rawFile.status == XMLHttpRequest.UNSENT) {
+				headerText = rawFile.responseText.slice(0, rawFile.responseText.indexOf("\n"));
+			}
+		}
 	};
 }
 
@@ -141,7 +193,7 @@ function countWords(object) {
 	}
 
 	// Count number of occurrences per document
-	for (var i = 0; i < tokens.length; i++) {
+	for (var i = 0, l = tokens.length; i < l; i++) {
 		var token = tokens[i].toLowerCase();
 		if (dictionary[token] === undefined) {
 			dictionary[token] = {};
@@ -192,17 +244,17 @@ function combineProbablities() {
 	var productB = 1;
 
 	// Multiply probabilities together
-	for (var i = 0; i < newWords.length; i++) {
+	for (var i = 0, l = newWords.length; i < l; i++) {
 		var newWord = newWords[i];
-		for (var j = 0; j < result.length; ++j) {
+		for (var j = 0, m = result.length; j < m; ++j) {
 			if (result[j].word === newWord) {
 
 				if (result[j].probA !== 0) {
-					productA *= result[j].probA * 1.9;
+					productA *= result[j].probA;
 				}
 
 				if (result[j].probB !== 0) {
-					productB *= result[j].probB * 1.9;
+					productB *= result[j].probB;
 				}
 			}
 		}
@@ -214,25 +266,26 @@ function combineProbablities() {
 }
 
 function renderOutput(filePath) {
-
-	var container = document.getElementById("container");
-	// var dynamicParagraph = document.getElementById("dynamicParagraph");
-	// if (dynamicParagraph) {
-	// 	dynamicParagraph.parentNode.removeChild(dynamicParagraph);
-	// }
-
+	var container = document.getElementById("innerContainer");
 	var newParagraph = document.createElement("p");
 	newParagraph.id = "dynamicParagraph";
 
-	if (resA > resB) {
-		newParagraph.textContent = filePath.substring(filePath.length - 8, filePath.length) + ". '" + headerText + "': " + "Classification Result: BUSINESS";
-	} else if (resA < resB) {
-		newParagraph.textContent = filePath.substring(filePath.length - 8, filePath.length) + ". '" + headerText + "': " + "Classification Result: SPORT";
-	} else if (resA === resB) {
-		newParagraph.textContent = "RESULT: There is an equal probability of the Input Text being of either category";
+	if (Object.keys(dictionary).length === 0) {
+		newParagraph.textContent = "You need to train the classifier before classification";
+	} else {
+		if (resA > resB) {
+			newParagraph.textContent = filePath.substring(filePath.length - 8, filePath.length) + ". '" + headerText + "': " + "Classification Result: BUSINESS";
+		} else if (resA < resB) {
+			newParagraph.textContent = filePath.substring(filePath.length - 8, filePath.length) + ". '" + headerText + "': " + "Classification Result: SPORT";
+		} else if (resA === resB) {
+			newParagraph.textContent = "RESULT: There is an equal probability of the Input Text being of either category";
+		}
 	}
 
 	newParagraph.classList.add("result");
 	container.appendChild(newParagraph);
 }
 
+function clearDiv() {
+	document.getElementById("innerContainer").innerHTML = "";
+}

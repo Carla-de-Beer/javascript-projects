@@ -3,12 +3,11 @@
   <head>
       <meta charset="UTF-8">
       <title>Naive Bayesian Text Classifier</title>
-      <script src="libraries/p5.js" type="text/javascript"></script>
-      <script src="libraries/p5.dom.js" type="text/javascript"></script>
       <script src="sketch.js" type="text/javascript"></script>
       <link rel="stylesheet" type="text/css" href="css/style.css">
   </head>
   <body>
+
       <div id="container" class="container">
         <h3>Naive Bayesian Text Classifier</h3>
           <p>The Bayesian Classifier is trained on a set of six text documents. After training, a new document is presented to the classifier for classification.</p>
@@ -17,9 +16,12 @@
           <p class="para">Category A: BUSINESS</p>
           <p class="para">Category B: SPORT</p>
           <br />
-          <p>Choose an input text:</p>
-          <!--<p class="para">Input Text: Horses</p>-->
+          <p class="para1">Choose the training set size:</p>
 
+          <button id="choose12" class="btn" onclick="train2()">Train with TWO articles</button>
+          <button id="choose13" class="btn" onclick="train10()">Train TEN articles</button>
+          <br />
+          <p class="para1">Choose an input text:</p>
           <button id="choose1" class="btn" onclick="chooseText(this.id)">X-01.txt (BUSINESS)</button>
           <button id="choose2" class="btn" onclick="chooseText(this.id)">X-02.txt (BUSINESS)</button>
           <button id="choose3" class="btn" onclick="chooseText(this.id)">X-03.txt (BUSINESS)</button>
@@ -30,7 +32,9 @@
           <button id="choose8" class="btn" onclick="chooseText(this.id)">X-08.txt (SPORT)</button>
           <button id="choose9" class="btn" onclick="chooseText(this.id)">X-09.txt (SPORT)</button>
           <button id="choose10" class="btn" onclick="chooseText(this.id)">X-10.txt (SPORT)</button>
-
+          <button id="choose11" class="btn" onclick="clearDiv()">Clear result field</button>
+          <div id="innerContainer"></div>
       </div>
+
   </body>
 </html>

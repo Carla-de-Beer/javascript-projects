@@ -45,6 +45,13 @@ p {
   font-weight: 600;
 }
 
+.para1 {
+  @extend p;
+  font-weight: 200;
+  color: #77787E;
+  font-style: italic;
+}
+
 .btn:focus {
   outline: 0; }
 

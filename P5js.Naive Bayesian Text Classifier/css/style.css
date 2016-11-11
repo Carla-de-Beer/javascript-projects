@@ -10,17 +10,17 @@ canvas {
   left: 80px;
   top: 40px; }
 
-.baseText, h3, p, .para, .result {
+.baseText, h3, p, .para, .para1, .result {
   font-family: Helvetica, Arial, sans-serif; }
 
 h3 {
   font-size: 20px;
   color: #4b4b4b; }
 
-.baseParagraph, p, .para, .result {
+.baseParagraph, p, .para, .para1, .result {
   font-size: 15px; }
 
-p, .para {
+p, .para, .para1 {
   font-weight: 100;
   color: #77787E; }
 
@@ -32,6 +32,11 @@ p, .para {
 
 .para {
   font-weight: 600; }
+
+.para1 {
+  font-weight: 200;
+  color: #77787E;
+  font-style: italic; }
 
 .btn:focus {
   outline: 0; }
