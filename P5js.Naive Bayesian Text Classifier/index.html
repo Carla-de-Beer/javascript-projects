@@ -10,29 +10,31 @@
 
       <div id="container" class="container">
         <h3>Naive Bayesian Text Classifier</h3>
-          <p>The Bayesian Classifier is trained on a set of six text documents. After training, a new document is presented to the classifier for classification.</p>
-          <p>The text documents are taken from <code>New York Times</code> archive articles (November 2016), relating to one of two categories:</p>
+          <p>The Bayesian Classifier is trained on a set of text documents. After training, a new document is presented to the classifier for classification.</p>
+          <p>The text documents are taken from <code>New York Times</code> archive articles (November 2016), relating to one of two categories.</p>
+            <!--<div class="category">-->
+              <!--<p class="para">Category A: BUSINESS</p>-->
+              <!--<p class="para">Category B: SPORT</p>-->
+            <!--</div>-->
           <br />
-          <p class="para">Category A: BUSINESS</p>
-          <p class="para">Category B: SPORT</p>
-          <br />
-          <p class="para1">Choose the training set size:</p>
-
-          <button id="choose12" class="btn" onclick="train2()">Train with TWO articles</button>
-          <button id="choose13" class="btn" onclick="train10()">Train TEN articles</button>
-          <br />
-          <p class="para1">Choose an input text:</p>
-          <button id="choose1" class="btn" onclick="chooseText(this.id)">X-01.txt (BUSINESS)</button>
-          <button id="choose2" class="btn" onclick="chooseText(this.id)">X-02.txt (BUSINESS)</button>
-          <button id="choose3" class="btn" onclick="chooseText(this.id)">X-03.txt (BUSINESS)</button>
-          <button id="choose4" class="btn" onclick="chooseText(this.id)">X-04.txt (BUSINESS)</button>
-          <button id="choose5" class="btn" onclick="chooseText(this.id)">X-05.txt (BUSINESS)</button>
-          <button id="choose6" class="btn" onclick="chooseText(this.id)">X-06.txt (SPORT)</button>
-          <button id="choose7" class="btn" onclick="chooseText(this.id)">X-07.txt (SPORT)</button>
-          <button id="choose8" class="btn" onclick="chooseText(this.id)">X-08.txt (SPORT)</button>
-          <button id="choose9" class="btn" onclick="chooseText(this.id)">X-09.txt (SPORT)</button>
-          <button id="choose10" class="btn" onclick="chooseText(this.id)">X-10.txt (SPORT)</button>
-          <button id="choose11" class="btn" onclick="clearDiv()">Clear result field</button>
+          <p class="para1">1. Choose the training set size:</p>
+          <button id="choose12" class="btn3" onclick="train2()"><strong>TWO</strong> articles</button>
+          <button id="choose13" class="btn3" onclick="train10()"><strong>TEN</strong> articles</button>
+          <br /><br />
+          <p class="para1">2. Choose an input text:</p>
+          <button id="choose1" class="btn1" onclick="chooseText(this.id)">X-01.txt <strong>(BUSINESS)</strong></button>
+          <button id="choose2" class="btn1" onclick="chooseText(this.id)">X-02.txt <strong>(BUSINESS)</strong></button>
+          <button id="choose3" class="btn1" onclick="chooseText(this.id)">X-03.txt <strong>(BUSINESS)</strong></button>
+          <button id="choose4" class="btn1" onclick="chooseText(this.id)">X-04.txt <strong>(BUSINESS)</strong></button>
+          <button id="choose5" class="btn1" onclick="chooseText(this.id)">X-05.txt <strong>(BUSINESS)</strong></button>
+          <br /><br />
+          <button id="choose6" class="btn2" onclick="chooseText(this.id)">X-06.txt <strong>(SPORT)</strong></button>
+          <button id="choose7" class="btn2" onclick="chooseText(this.id)">X-07.txt <strong>(SPORT)</strong></button>
+          <button id="choose8" class="btn2" onclick="chooseText(this.id)">X-08.txt <strong>(SPORT)</strong></button>
+          <button id="choose9" class="btn2" onclick="chooseText(this.id)">X-09.txt <strong>(SPORT)</strong></button>
+          <button id="choose10" class="btn2" onclick="chooseText(this.id)">X-10.txt <strong>(SPORT)</strong></button>
+          <br /><br /><br /><br />
+          <button id="choose11" class="btn3" onclick="clearDiv()"><strong>CLEAR</strong></button>
           <div id="innerContainer"></div>
       </div>
 

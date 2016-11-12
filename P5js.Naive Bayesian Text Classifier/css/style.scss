@@ -12,6 +12,11 @@ canvas {
   top: 40px;
 }
 
+.category {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
 .baseText {
   font-family: Helvetica, Arial, sans-serif;
 }
@@ -35,9 +40,17 @@ p {
 .result {
   @extend .baseText, .baseParagraph;
   position: relative;
-  top: 40px;
+  top: -210px;
+  left: 650px;
   font-weight: 500;
+}
+
+.paraPinkText {
   color: #eb105a;
+}
+
+.paraGreenText {
+  color: #08eb3c;
 }
 
 .para {
@@ -55,29 +68,56 @@ p {
 .btn:focus {
   outline: 0; }
 
-.btn {
+.btnBase {
   width: 100px;
   height: 40px;
   margin-right: 7px;
-  background: #ebeef0;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 4px;
+  font-family: Helvetica, Arial, sans-serif;
   background-image: -webkit-linear-gradient(top, #f5f2f0, #e8eaeb);
   background-image: -moz-linear-gradient(top, #f5f2f0, #e8eaeb);
   background-image: -ms-linear-gradient(top, #f5f2f0, #e8eaeb);
   background-image: -o-linear-gradient(top, #f5f2f0, #e8eaeb);
   background-image: linear-gradient(to bottom, #f5f2f0, #e8eaeb);
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  border-radius: 4px;
-  font-family: Helvetica, Arial, sans-serif;
-  color: #918c91;
   font-size: 12px;
   text-decoration: none; }
 
-.btn:hover {
+.btnBase:hover {
   background: #CECCCD;
+  text-decoration: none;
   background-image: -webkit-linear-gradient(top, #F5F2F3, #CECCCD);
   background-image: -moz-linear-gradient(top, #F5F2F3, #CECCCD);
   background-image: -ms-linear-gradient(top, #F5F2F3, #CECCCD);
   background-image: -o-linear-gradient(top, #F5F2F3, #CECCCD);
-  background-image: linear-gradient(to bottom, #F5F2F3, #CECCCD);
-  text-decoration: none; }
+  background-image: linear-gradient(to bottom, #F5F2F3, #CECCCD);}
+
+.btn1 {
+  @extend .btnBase;
+  color: #eb105a;
+  background: #fff;
+}
+
+.btn1:hover {
+  @extend .btnBase:hover;
+}
+
+.btn2 {
+  @extend .btnBase;
+  color: #08eb3c;
+  background: #fff;
+}
+
+.btn2:hover {
+  @extend .btnBase:hover;
+}
+
+.btn3 {
+  @extend .btnBase;
+  color: #77787E;
+}
+
+.btn3:hover {
+  @extend .btnBase:hover;
+}

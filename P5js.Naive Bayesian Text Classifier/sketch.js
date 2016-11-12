@@ -273,12 +273,20 @@ function renderOutput(filePath) {
 	if (Object.keys(dictionary).length === 0) {
 		newParagraph.textContent = "You need to train the classifier before classification";
 	} else {
+
+		var business = "BUSINESS";
+		var sport = "SPORT";
 		if (resA > resB) {
-			newParagraph.textContent = filePath.substring(filePath.length - 8, filePath.length) + ". '" + headerText + "': " + "Classification Result: BUSINESS";
+			newParagraph.innerHTML = filePath.substring(filePath.length - 8, filePath.length) + ". '" +
+				headerText + "' | " + "Classification Result: " + business.bold();
+			newParagraph.classList.add("paraPinkText");
 		} else if (resA < resB) {
-			newParagraph.textContent = filePath.substring(filePath.length - 8, filePath.length) + ". '" + headerText + "': " + "Classification Result: SPORT";
+			newParagraph.innerHTML = filePath.substring(filePath.length - 8, filePath.length) + ". '" +
+				headerText + "' | " + "Classification Result: " + sport.bold();
+			newParagraph.classList.add("paraGreenText");
 		} else if (resA === resB) {
-			newParagraph.textContent = "RESULT: There is an equal probability of the Input Text being of either category";
+			newParagraph.innerHTML = "RESULT: There is an equal probability of the Input Text being of either category";
+			newParagraph.classList.add("paraPinkText");
 		}
 	}
 
