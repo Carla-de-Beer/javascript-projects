@@ -29,18 +29,7 @@ function train2() {
 		}
 	];
 
-	// Train the classifier
-	for (var i = 0, l = trainingSet.length; i < l; ++i) {
-		var text = readTextFile("textFiles/" + trainingSet[i].path);
-		var object = {
-			text: text,
-			category: trainingSet[i].category
-		};
-
-		countWords(object);
-	}
-
-	calculateProbabilities();
+	train(trainingSet);
 }
 
 function train10() {
@@ -81,6 +70,81 @@ function train10() {
 		}
 	];
 
+	train(trainingSet);
+}
+
+function train20() {
+
+	resetGlobals();
+
+	var trainingSet = [
+		{
+			path: "Business/B-01.txt",
+			category: "A"
+		}, {
+			path: "Business/B-02.txt",
+			category: "A"
+		}, {
+			path: "Business/B-03.txt",
+			category: "A"
+		}, {
+			path: "Business/B-04.txt",
+			category: "A"
+		}, {
+			path: "Business/B-05.txt",
+			category: "A"
+		}, {
+			path: "Business/B-06.txt",
+			category: "A"
+		}, {
+			path: "Business/B-07.txt",
+			category: "A"
+		}, {
+			path: "Business/B-08.txt",
+			category: "A"
+		}, {
+			path: "Business/B-09.txt",
+			category: "A"
+		}, {
+			path: "Business/B-10.txt",
+			category: "A"
+		}, {
+			path: "Sport/S-01.txt",
+			category: "B"
+		}, {
+			path: "Sport/S-02.txt",
+			category: "B"
+		}, {
+			path: "Sport/S-03.txt",
+			category: "B"
+		}, {
+			path: "Sport/S-04.txt",
+			category: "B"
+		}, {
+			path: "Sport/S-05.txt",
+			category: "B"
+		}, {
+			path: "Sport/S-06.txt",
+			category: "B"
+		}, {
+			path: "Sport/S-07.txt",
+			category: "B"
+		}, {
+			path: "Sport/S-08.txt",
+			category: "B"
+		}, {
+			path: "Sport/S-09.txt",
+			category: "B"
+		}, {
+			path: "Sport/S-10.txt",
+			category: "B"
+		}
+	];
+
+	train(trainingSet);
+}
+
+function train(trainingSet) {
 	// Train the classifier
 	for (var i = 0, l = trainingSet.length; i < l; ++i) {
 		var text = readTextFile("textFiles/" + trainingSet[i].path);
@@ -105,10 +169,10 @@ function resetGlobals() {
 }
 
 function chooseText(id) {
-
 	var filePath;
 	resA = 0;
 	resB = 0;
+	newWords = "";
 
 	if (id === "choose1") {
 		filePath = "textFiles/CategoryX/X-01.txt";
@@ -132,10 +196,25 @@ function chooseText(id) {
 		filePath = "textFiles/CategoryX/X-10.txt";
 	}
 
-	doStuff(filePath, readFirstLine);
+	doCalculations(filePath, readFirstLine);
 }
 
-function doStuff(filePath, callback) {
+function readTextArea() {
+	resA = 0;
+	resB = 0;
+	newWords = "";
+
+	var unknown = document.getElementById("textArea").value;
+	if (unknown !== "") {
+		newWords = unknown.split(/\W+/);
+		combineProbablities();
+		renderOutput2();
+	} else {
+		renderNull();
+	}
+}
+
+function doCalculations(filePath, callback) {
 
 	if (typeof callback === "function") {
 		callback(filePath);
@@ -143,10 +222,13 @@ function doStuff(filePath, callback) {
 
 	setTimeout(function() {
 		var unknown = readTextFile(filePath);
-		newWords = unknown.split(/\W+/);
-
-		combineProbablities();
-		renderOutput(filePath);
+		if (unknown !== "") {
+			newWords = unknown.split(/\W+/);
+			combineProbablities();
+			renderOutput1(filePath);
+		} else {
+			renderNull();
+		}
 	}, 5);
 
 }
@@ -154,8 +236,6 @@ function doStuff(filePath, callback) {
 function readFirstLine(filePath) {
 	var rawFile = new XMLHttpRequest();
 	rawFile.open("GET", filePath, true);
-	rawFile.send();
-
 	rawFile.onreadystatechange = function () {
 		if(rawFile.readyState === XMLHttpRequest.DONE) {
 			if(rawFile.status === 200 || rawFile.status == XMLHttpRequest.UNSENT) {
@@ -163,6 +243,8 @@ function readFirstLine(filePath) {
 			}
 		}
 	};
+
+	rawFile.send(null);
 }
 
 function readTextFile(filePath) {
@@ -244,17 +326,36 @@ function combineProbablities() {
 	var productB = 1;
 
 	// Multiply probabilities together
-	for (var i = 0, l = newWords.length; i < l; i++) {
-		var newWord = newWords[i];
+	if (newWords.length === 1) {
 		for (var j = 0, m = result.length; j < m; ++j) {
-			if (result[j].word === newWord) {
-
-				if (result[j].probA !== 0) {
-					productA *= result[j].probA;
+			if (result[j].word === newWords[0]) {
+				if (result[j].probA === 1 && result[j].probB === 0) {
+					productA = 1;
+					productB = 0;
+				} else if (result[j].probB === 1 && result[j].probA === 0) {
+					productA = 0;
+					productB = 1;
+				} else {
+					if (result[j].probA !== 0) {
+						productA *= result[j].probA;
+					}
+					if (result[j].probB !== 0) {
+						productB *= result[j].probB;
+					}
 				}
-
-				if (result[j].probB !== 0) {
-					productB *= result[j].probB;
+			}
+		}
+	} else if (newWords.length > 1) {
+		for (var i = 0, l = newWords.length; i < l; i++) {
+			var newWord = newWords[i];
+			for (var j = 0, m = result.length; j < m; ++j) {
+				if (result[j].word === newWord) {
+					if (result[j].probA !== 0) {
+						productA *= result[j].probA;
+					}
+					if (result[j].probB !== 0) {
+						productB *= result[j].probB;
+					}
 				}
 			}
 		}
@@ -265,7 +366,7 @@ function combineProbablities() {
 	resB = productB / (productB + productA);
 }
 
-function renderOutput(filePath) {
+function renderOutput1(filePath) {
 	var container = document.getElementById("innerContainer");
 	var newParagraph = document.createElement("p");
 	newParagraph.id = "dynamicParagraph";
@@ -273,7 +374,6 @@ function renderOutput(filePath) {
 	if (Object.keys(dictionary).length === 0) {
 		newParagraph.textContent = "You need to train the classifier before classification";
 	} else {
-
 		var business = "BUSINESS";
 		var sport = "SPORT";
 		if (resA > resB) {
@@ -294,6 +394,45 @@ function renderOutput(filePath) {
 	container.appendChild(newParagraph);
 }
 
+function renderOutput2() {
+	var container = document.getElementById("innerContainer");
+	var newParagraph = document.createElement("p");
+	newParagraph.id = "dynamicParagraph";
+
+	if (Object.keys(dictionary).length === 0) {
+		newParagraph.textContent = "You need to train the classifier before classification";
+	} else {
+		var business = "BUSINESS";
+		var sport = "SPORT";
+		if (resA > resB) {
+			newParagraph.innerHTML = "Classification Result: " + business.bold();
+			newParagraph.classList.add("paraPinkText");
+		} else if (resA < resB) {
+			newParagraph.innerHTML = "Classification Result: " + sport.bold();
+			newParagraph.classList.add("paraGreenText");
+		} else if (resA === resB) {
+			newParagraph.innerHTML = "RESULT: There is an equal probability of the Input Text being of either category";
+		}
+	}
+
+	newParagraph.classList.add("result");
+	container.appendChild(newParagraph);
+}
+
+function renderNull() {
+	var container = document.getElementById("innerContainer");
+	var newParagraph = document.createElement("p");
+	newParagraph.id = "dynamicParagraph";
+	if (Object.keys(dictionary).length === 0) {
+		newParagraph.innerHTML = "You need to train the classifier before classification";
+	} else {
+		newParagraph.innerHTML = "Input text is empty";
+	}
+	newParagraph.classList.add("result");
+	container.appendChild(newParagraph);
+}
+
 function clearDiv() {
 	document.getElementById("innerContainer").innerHTML = "";
+	document.getElementById("textArea").value = "";
 }
