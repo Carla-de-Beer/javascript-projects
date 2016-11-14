@@ -6,8 +6,6 @@
 // NOTE: Numbers are excluded from the training set dictionary
 
 var dictionary = {};
-var tokenCountA = 0;
-var tokenCountB = 0;
 var docCountA = 0;
 var docCountB = 0;
 var resA = 0;
@@ -162,8 +160,6 @@ function train(trainingSet) {
 
 function resetGlobals() {
 	dictionary = {};
-	tokenCountA = 0;
-	tokenCountB = 0;
 	docCountA = 0;
 	docCountB = 0;
 	result = [];
@@ -286,16 +282,14 @@ function countWords(object) {
 				dictionary[token].countA = 1;
 				dictionary[token].countB = 0;
 			} else if (object.category === "B") {
-				dictionary[token].countA = 1;
-				dictionary[token].countB = 0;
+				dictionary[token].countA = 0;
+				dictionary[token].countB = 1;
 			}
 		} else {
 			if (object.category === "A") {
 				dictionary[token].countA++;
-				tokenCountA++;
 			} else if (object.category === "B") {
 				dictionary[token].countB++;
-				tokenCountB++;
 			}
 		}
 	}
