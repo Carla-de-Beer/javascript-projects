@@ -3,6 +3,7 @@
 // November 2016
 // Inspired by Daniel Shiffman's Coding Rainbow series:
 // http://shiffman.net/a2z/intro/
+// NOTE: Numbers are excluded from the training set dictionary
 
 var dictionary = {};
 var tokenCountA = 0;
@@ -265,7 +266,9 @@ function readTextFile(filePath) {
 
 function countWords(object) {
 
-	var tokens = object.text.split(/\W+/);
+	//var tokens = object.text.split(/\W+/);
+	var tokens  = object.text.split(/[\W+\d+]/);
+	tokens = tokens.filter(Boolean);
 
 	// Count total number of document size
 	if (object.category === "A") {
@@ -405,13 +408,13 @@ function renderOutput2() {
 		var business = "BUSINESS";
 		var sport = "SPORT";
 		if (resA > resB) {
-			newParagraph.innerHTML = "Classification Result: " + business.bold();
+			newParagraph.innerHTML = "Input text classification result: " + business.bold();
 			newParagraph.classList.add("paraPinkText");
 		} else if (resA < resB) {
-			newParagraph.innerHTML = "Classification Result: " + sport.bold();
+			newParagraph.innerHTML = "Input text classification result: " + sport.bold();
 			newParagraph.classList.add("paraGreenText");
 		} else if (resA === resB) {
-			newParagraph.innerHTML = "RESULT: There is an equal probability of the Input Text being of either category";
+			newParagraph.innerHTML = "RESULT: There is an equal probability of the input text being of either category";
 		}
 	}
 
