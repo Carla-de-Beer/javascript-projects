@@ -270,7 +270,7 @@ function countWords(object) {
 	var tokens  = object.text.split(/[\W+\d+]/);
 	tokens = tokens.filter(Boolean);
 
-	// Count total number of document size
+	// Count total number of words per document category
 	if (object.category === "A") {
 		docCountA += tokens.length;
 	} else if (object.category === "B") {
@@ -289,7 +289,6 @@ function countWords(object) {
 				dictionary[token].countA = 1;
 				dictionary[token].countB = 0;
 			}
-			dictionary[token].word = token;
 		} else {
 			if (object.category === "A") {
 				dictionary[token].countA++;
@@ -308,12 +307,11 @@ function calculateProbabilities() {
 			var object = {};
 			var word = dictionary[key];
 
-			result.word = word.word;
 			var freqA = word.countA / docCountA;
 			var freqB = word.countB / docCountB;
 
 			// Probability via Bayes rule
-			object.word = word.word;
+			object.word = key;
 			object.probA = freqA / (freqA + freqB);
 			object.probB = 1 - object.probA;
 
