@@ -20,10 +20,10 @@ function train2() {
 
 	var trainingSet = [
 		{
-			path: "Business/B-02.txt",
+			path: "Business/B-01.txt",
 			category: "A"
 		}, {
-			path: "Sport/S-02.txt",
+			path: "Sport/S-01.txt",
 			category: "B"
 		}
 	];
@@ -37,20 +37,23 @@ function train10() {
 
 	var trainingSet = [
 		{
+			path: "Business/B-01.txt",
+			category: "A"
+		}, {
 			path: "Business/B-02.txt",
 			category: "A"
 		}, {
 			path: "Business/B-03.txt",
 			category: "A"
 		}, {
+			path: "Business/B-04.txt",
+			category: "A"
+		}, {
 			path: "Business/B-05.txt",
 			category: "A"
 		}, {
-			path: "Business/B-07.txt",
-			category: "A"
-		}, {
-			path: "Business/B-09.txt",
-			category: "A"
+			path: "Sport/S-01.txt",
+			category: "B"
 		}, {
 			path: "Sport/S-02.txt",
 			category: "B"
@@ -58,13 +61,10 @@ function train10() {
 			path: "Sport/S-03.txt",
 			category: "B"
 		}, {
+			path: "Sport/S-04.txt",
+			category: "B"
+		}, {
 			path: "Sport/S-05.txt",
-			category: "B"
-		}, {
-			path: "Sport/S-07.txt",
-			category: "B"
-		}, {
-			path: "Sport/S-09.txt",
 			category: "B"
 		}
 	];
@@ -193,25 +193,24 @@ function chooseText(id) {
 		filePath = "textFiles/CategoryX/X-10.txt";
 	}
 
-	doCalculations(filePath, readFirstLine);
+	calculateWithFiles(filePath, readFirstLine);
 }
 
-function readTextArea() {
+function calculateWithText() {
 	resA = 0;
 	resB = 0;
 	newWords = "";
 
 	var unknown = document.getElementById("textArea").value;
 	if (unknown !== "") {
-		newWords = unknown.split(/\W+/);
-		combineProbablities();
-		renderOutput2();
+		calculateResult(unknown);
+		renderOutputText();
 	} else {
-		renderNull();
+		renderError();
 	}
 }
 
-function doCalculations(filePath, callback) {
+function calculateWithFiles(filePath, callback) {
 
 	if (typeof callback === "function") {
 		callback(filePath);
@@ -220,14 +219,20 @@ function doCalculations(filePath, callback) {
 	setTimeout(function() {
 		var unknown = readTextFile(filePath);
 		if (unknown !== "") {
-			newWords = unknown.split(/\W+/);
-			combineProbablities();
-			renderOutput1(filePath);
+			calculateResult(unknown);
+			renderOutputFiles(filePath);
 		} else {
-			renderNull();
+			renderError();
 		}
 	}, 5);
 
+}
+
+function calculateResult(unknown) {
+	newWords = unknown.split(/[\W+\d+]/);
+	newWords = newWords.filter(Boolean);
+	convertToLowerCase(newWords);
+	combineProbablities();
 }
 
 function readFirstLine(filePath) {
@@ -262,7 +267,6 @@ function readTextFile(filePath) {
 
 function countWords(object) {
 
-	//var tokens = object.text.split(/\W+/);
 	var tokens  = object.text.split(/[\W+\d+]/);
 	tokens = tokens.filter(Boolean);
 
@@ -317,38 +321,41 @@ function calculateProbabilities() {
 function combineProbablities() {
 	// Combined probabilities
 	// http://www.paulgraham.com/naivebayes.html
-	var productA = 1;
-	var productB = 1;
+	var productA = 1.0;
+	var productB = 1.0;
 
 	// Multiply probabilities together
 	if (newWords.length === 1) {
 		for (var j = 0, m = result.length; j < m; ++j) {
 			if (result[j].word === newWords[0]) {
 				if (result[j].probA === 1 && result[j].probB === 0) {
-					productA = 1;
-					productB = 0;
+					productA = 1.0;
+					productB = 0.0;
 				} else if (result[j].probB === 1 && result[j].probA === 0) {
-					productA = 0;
-					productB = 1;
+					productA = 0.0;
+					productB = 1.0;
 				} else {
-					if (result[j].probA !== 0) {
+					if (result[j].probA > 0) {
 						productA *= result[j].probA;
 					}
-					if (result[j].probB !== 0) {
+					if (result[j].probB > 0) {
 						productB *= result[j].probB;
 					}
 				}
 			}
 		}
 	} else if (newWords.length > 1) {
-		for (var i = 0, l = newWords.length; i < l; i++) {
+		var count = 0;
+		for (var i = 0, l = newWords.length; i < l; ++i) {
 			var newWord = newWords[i];
 			for (var j = 0, m = result.length; j < m; ++j) {
 				if (result[j].word === newWord) {
-					if (result[j].probA !== 0) {
+					count++;
+					//console.log(count);
+					if (result[j].probA > 0) {
 						productA *= result[j].probA;
 					}
-					if (result[j].probB !== 0) {
+					if (result[j].probB > 0) {
 						productB *= result[j].probB;
 					}
 				}
@@ -356,12 +363,21 @@ function combineProbablities() {
 		}
 	}
 
+	// var string = "";
+	// for (var i = 0; i < newWords.length; ++i) {
+	// 	string += newWords[i];
+	// 	string += " ";
+	// }
+	// console.log(string);
+
+	//console.log("newWords.length = " + newWords.length);
+
 	// Apply formula
 	resA = productA / (productA + productB);
 	resB = productB / (productB + productA);
 }
 
-function renderOutput1(filePath) {
+function renderOutputFiles(filePath) {
 	var container = document.getElementById("innerContainer");
 	var newParagraph = document.createElement("p");
 	newParagraph.id = "dynamicParagraph";
@@ -389,7 +405,7 @@ function renderOutput1(filePath) {
 	container.appendChild(newParagraph);
 }
 
-function renderOutput2() {
+function renderOutputText() {
 	var container = document.getElementById("innerContainer");
 	var newParagraph = document.createElement("p");
 	newParagraph.id = "dynamicParagraph";
@@ -414,7 +430,7 @@ function renderOutput2() {
 	container.appendChild(newParagraph);
 }
 
-function renderNull() {
+function renderError() {
 	var container = document.getElementById("innerContainer");
 	var newParagraph = document.createElement("p");
 	newParagraph.id = "dynamicParagraph";
@@ -425,6 +441,12 @@ function renderNull() {
 	}
 	newParagraph.classList.add("result");
 	container.appendChild(newParagraph);
+}
+
+function convertToLowerCase(array) {
+	for(var i = 0; i < array.length; ++i) {
+		array[i] = array[i].toLowerCase();
+	}
 }
 
 function clearDiv() {
