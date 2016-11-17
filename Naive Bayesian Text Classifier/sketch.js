@@ -12,7 +12,6 @@ var resA = 0;
 var resB = 0;
 var newWords;
 var result = [];
-var headerText;
 
 
 function loadJSON(filePath, callback) {
@@ -20,8 +19,24 @@ function loadJSON(filePath, callback) {
 	xobj.overrideMimeType("application/json");
 	xobj.open('GET', filePath, true);
 	xobj.onreadystatechange = function () {
-		if (xobj.readyState == XMLHttpRequest.DONE && xobj.status == "200") {
-			callback(xobj.responseText);
+		if(xobj.readyState === XMLHttpRequest.DONE) {
+			if(xobj.status === 200 || xobj.status == XMLHttpRequest.UNSENT) {
+				callback(xobj.responseText);
+			}
+		}
+	};
+	xobj.send(null);
+}
+
+function readTextFile(filePath, callback) {
+	var xobj = new XMLHttpRequest();
+	xobj.open("GET", filePath, false);
+	xobj.onreadystatechange = function () {
+		if(xobj.readyState === XMLHttpRequest.DONE) {
+			if(xobj.status === 200 || xobj.status == XMLHttpRequest.UNSENT) {
+				var headerText = xobj.responseText.slice(0, xobj.responseText.indexOf("\n"));
+				callback(xobj.responseText, headerText);
+			}
 		}
 	};
 	xobj.send(null);
@@ -54,13 +69,13 @@ function train20() {
 function train(trainingSet) {
 	// Train the classifier
 	for (var i = 0, l = trainingSet.length; i < l; ++i) {
-		var text = readTextFile("textFiles/" + trainingSet[i].path);
-		var object = {
-			text: text,
-			category: trainingSet[i].category
-		};
-
-		countWords(object);
+		readTextFile("textFiles/" + trainingSet[i].path, function(response) {
+			var object = {
+				text: response,
+				category: trainingSet[i].category
+			};
+			countWords(object);
+		});
 	}
 
 	calculateProbabilities();
@@ -101,7 +116,15 @@ function chooseText(id) {
 		filePath = "textFiles/CategoryX/X-10.txt";
 	}
 
-	calculateWithFiles(filePath, readFirstLine);
+	readTextFile(filePath, function(response, header) {
+		var unknown = response;
+		if (unknown !== "") {
+			calculateResult(unknown);
+			renderOutputFiles(filePath, header);
+		} else {
+			renderError();
+		}
+	});
 }
 
 function calculateWithText() {
@@ -118,40 +141,6 @@ function calculateWithText() {
 	}
 }
 
-function readTextFile(filePath) {
-	var allText = {};
-	var rawFile = new XMLHttpRequest();
-	rawFile.open("GET", filePath, false);
-	rawFile.onreadystatechange = function () {
-		if(rawFile.readyState === XMLHttpRequest.DONE) {
-			if(rawFile.status === 200 || rawFile.status == XMLHttpRequest.UNSENT) {
-				allText = rawFile.responseText;
-			}
-		}
-	};
-
-	rawFile.send(null);
-	return allText;
-}
-
-function calculateWithFiles(filePath, callback) {
-
-	if (typeof callback === "function") {
-		callback(filePath);
-	}
-
-	setTimeout(function() {
-		var unknown = readTextFile(filePath);
-		if (unknown !== "") {
-			calculateResult(unknown);
-			renderOutputFiles(filePath);
-		} else {
-			renderError();
-		}
-	}, 5);
-
-}
-
 function calculateResult(unknown) {
 	newWords = unknown.split(/[\W+\d+]/);
 	newWords = newWords.filter(Boolean);
@@ -159,23 +148,8 @@ function calculateResult(unknown) {
 	combineProbablities();
 }
 
-function readFirstLine(filePath) {
-	var rawFile = new XMLHttpRequest();
-	rawFile.open("GET", filePath, true);
-	rawFile.onreadystatechange = function () {
-		if(rawFile.readyState === XMLHttpRequest.DONE) {
-			if(rawFile.status === 200 || rawFile.status == XMLHttpRequest.UNSENT) {
-				headerText = rawFile.responseText.slice(0, rawFile.responseText.indexOf("\n"));
-			}
-		}
-	};
-
-	rawFile.send(null);
-}
-
 function countWords(object) {
-
-	var tokens  = object.text.split(/[\W+\d+]/);
+	var tokens = object.text.split(/[\W+\d+]/);
 	tokens = tokens.filter(Boolean);
 
 	// Count total number of words per document category
@@ -186,7 +160,7 @@ function countWords(object) {
 	}
 
 	// Count number of occurrences per document
-	for (var i = 0, l = tokens.length; i < l; i++) {
+	for (var i = 0, l = tokens.length; i < l; ++i) {
 		var token = tokens[i].toLowerCase();
 		if (dictionary[token] === undefined) {
 			dictionary[token] = {};
@@ -253,13 +227,10 @@ function combineProbablities() {
 			}
 		}
 	} else if (newWords.length > 1) {
-		var count = 0;
 		for (var i = 0, l = newWords.length; i < l; ++i) {
 			var newWord = newWords[i];
 			for (var j = 0, m = result.length; j < m; ++j) {
 				if (result[j].word === newWord) {
-					count++;
-					//console.log(count);
 					if (result[j].probA > 0) {
 						productA *= result[j].probA;
 					}
@@ -271,21 +242,12 @@ function combineProbablities() {
 		}
 	}
 
-	// var string = "";
-	// for (var i = 0; i < newWords.length; ++i) {
-	// 	string += newWords[i];
-	// 	string += " ";
-	// }
-	// console.log(string);
-
-	//console.log("newWords.length = " + newWords.length);
-
 	// Apply formula
 	resA = productA / (productA + productB);
 	resB = productB / (productB + productA);
 }
 
-function renderOutputFiles(filePath) {
+function renderOutputFiles(filePath, headerText) {
 	var container = document.getElementById("innerContainer");
 	var newParagraph = document.createElement("p");
 	newParagraph.id = "dynamicParagraph";
