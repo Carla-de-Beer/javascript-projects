@@ -14,133 +14,41 @@ var newWords;
 var result = [];
 var headerText;
 
-function train2() {
 
-	resetGlobals();
-
-	var trainingSet = [
-		{
-			path: "Business/B-01.txt",
-			category: "A"
-		}, {
-			path: "Sport/S-01.txt",
-			category: "B"
+function loadJSON(filePath, callback) {
+	var xobj = new XMLHttpRequest();
+	xobj.overrideMimeType("application/json");
+	xobj.open('GET', filePath, true);
+	xobj.onreadystatechange = function () {
+		if (xobj.readyState == XMLHttpRequest.DONE && xobj.status == "200") {
+			callback(xobj.responseText);
 		}
-	];
+	};
+	xobj.send(null);
+}
 
-	train(trainingSet);
+function train2() {
+	loadJSON("JSON/training2.json", function(response) {
+		var trainingSet = JSON.parse(response);
+		resetGlobals();
+		train(trainingSet);
+	});
 }
 
 function train10() {
-
-	resetGlobals();
-
-	var trainingSet = [
-		{
-			path: "Business/B-01.txt",
-			category: "A"
-		}, {
-			path: "Business/B-02.txt",
-			category: "A"
-		}, {
-			path: "Business/B-03.txt",
-			category: "A"
-		}, {
-			path: "Business/B-04.txt",
-			category: "A"
-		}, {
-			path: "Business/B-05.txt",
-			category: "A"
-		}, {
-			path: "Sport/S-01.txt",
-			category: "B"
-		}, {
-			path: "Sport/S-02.txt",
-			category: "B"
-		}, {
-			path: "Sport/S-03.txt",
-			category: "B"
-		}, {
-			path: "Sport/S-04.txt",
-			category: "B"
-		}, {
-			path: "Sport/S-05.txt",
-			category: "B"
-		}
-	];
-
-	train(trainingSet);
+	loadJSON("JSON/training10.json", function(response) {
+		var trainingSet = JSON.parse(response);
+		resetGlobals();
+		train(trainingSet);
+	});
 }
 
 function train20() {
-
-	resetGlobals();
-
-	var trainingSet = [
-		{
-			path: "Business/B-01.txt",
-			category: "A"
-		}, {
-			path: "Business/B-02.txt",
-			category: "A"
-		}, {
-			path: "Business/B-03.txt",
-			category: "A"
-		}, {
-			path: "Business/B-04.txt",
-			category: "A"
-		}, {
-			path: "Business/B-05.txt",
-			category: "A"
-		}, {
-			path: "Business/B-06.txt",
-			category: "A"
-		}, {
-			path: "Business/B-07.txt",
-			category: "A"
-		}, {
-			path: "Business/B-08.txt",
-			category: "A"
-		}, {
-			path: "Business/B-09.txt",
-			category: "A"
-		}, {
-			path: "Business/B-10.txt",
-			category: "A"
-		}, {
-			path: "Sport/S-01.txt",
-			category: "B"
-		}, {
-			path: "Sport/S-02.txt",
-			category: "B"
-		}, {
-			path: "Sport/S-03.txt",
-			category: "B"
-		}, {
-			path: "Sport/S-04.txt",
-			category: "B"
-		}, {
-			path: "Sport/S-05.txt",
-			category: "B"
-		}, {
-			path: "Sport/S-06.txt",
-			category: "B"
-		}, {
-			path: "Sport/S-07.txt",
-			category: "B"
-		}, {
-			path: "Sport/S-08.txt",
-			category: "B"
-		}, {
-			path: "Sport/S-09.txt",
-			category: "B"
-		}, {
-			path: "Sport/S-10.txt",
-			category: "B"
-		}
-	];
-
-	train(trainingSet);
+	loadJSON("JSON/training20.json", function(response) {
+		var trainingSet = JSON.parse(response);
+		resetGlobals();
+		train(trainingSet);
+	});
 }
 
 function train(trainingSet) {
@@ -210,6 +118,22 @@ function calculateWithText() {
 	}
 }
 
+function readTextFile(filePath) {
+	var allText = {};
+	var rawFile = new XMLHttpRequest();
+	rawFile.open("GET", filePath, false);
+	rawFile.onreadystatechange = function () {
+		if(rawFile.readyState === XMLHttpRequest.DONE) {
+			if(rawFile.status === 200 || rawFile.status == XMLHttpRequest.UNSENT) {
+				allText = rawFile.responseText;
+			}
+		}
+	};
+
+	rawFile.send(null);
+	return allText;
+}
+
 function calculateWithFiles(filePath, callback) {
 
 	if (typeof callback === "function") {
@@ -247,22 +171,6 @@ function readFirstLine(filePath) {
 	};
 
 	rawFile.send(null);
-}
-
-function readTextFile(filePath) {
-	var allText = {};
-	var rawFile = new XMLHttpRequest();
-	rawFile.open("GET", filePath, false);
-	rawFile.onreadystatechange = function () {
-		if(rawFile.readyState === XMLHttpRequest.DONE) {
-			if(rawFile.status === 200 || rawFile.status == XMLHttpRequest.UNSENT) {
-				allText = rawFile.responseText;
-			}
-		}
-	};
-
-	rawFile.send(null);
-	return allText;
 }
 
 function countWords(object) {
