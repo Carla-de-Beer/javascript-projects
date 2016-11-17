@@ -227,16 +227,59 @@ function combineProbablities() {
 			}
 		}
 	} else if (newWords.length > 1) {
+
+		var A = false;
+		var B = false;
+
+		var totalA = 0;
+		var totalB = 0;
 		for (var i = 0, l = newWords.length; i < l; ++i) {
 			var newWord = newWords[i];
 			for (var j = 0, m = result.length; j < m; ++j) {
 				if (result[j].word === newWord) {
-					if (result[j].probA > 0) {
-						productA *= result[j].probA;
+					totalA += result[j].probA;
+					totalB += result[j].probB;
+				}
+			}
+		}
+
+		// Make provision for all words being of the same category,
+		// or most of the words being of one, and fewer of the other,
+		// otherwise we are multiplying both sides by zero.
+		if (totalA > 0 && totalB == 0) {
+			A = true;
+		} else if (totalB > 0 && totalA == 0) {
+			B = true;
+		} else if (totalA > 0 && totalB > 0 && totalA > totalB) {
+			A = true;
+		} else if (totalA > 0 && totalB > 0 && totalB > totalA) {
+			B = true;
+		}
+
+		for (var i = 0, l = newWords.length; i < l; ++i) {
+			newWord = newWords[i];
+			for (var j = 0, m = result.length; j < m; ++j) {
+				if (result[j].word === newWord) {
+
+					if (A && !B) {
+						if (result[j].probA > 0) {
+							productA *= result[j].probA;
+						}
+						productB = 0;
+					} else if (!A && B) {
+						if (result[j].probB > 0) {
+							productB *= result[j].probB;
+						}
+						productA = 0;
+					} else if ((!A && !B) || (A && B)) {
+						if (result[j].probA > 0) {
+							productA *= result[j].probA;
+						}
+						if (result[j].probB > 0) {
+							productB *= result[j].probB;
+						}
 					}
-					if (result[j].probB > 0) {
-						productB *= result[j].probB;
-					}
+
 				}
 			}
 		}
