@@ -1,2 +1,3 @@
-# JavaScript
-Various JavaScript web page projects
+# JavaScript #
+
+Various JavaScript-based projects.
