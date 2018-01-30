@@ -1,3 +1,8 @@
+// Basic matrix operations library.
+// Created: January 2018.
+// Based on the examples by Daniel Shiffman:
+// https://www.youtube.com/user/shiffman/videos
+
 class Matrix {
   constructor(rows, cols) {
     this.rows = rows;
@@ -23,7 +28,7 @@ class Matrix {
   static subtract(a, b) {
     // Matrices must be of the same size, otherwise subtraction is not possible.
     if (a.cols !== b.cols && a.rows !== b.rows) {
-      console.log("Matrices must be of the same size.");
+      console.log("Matrices must be of equal size");
       return undefined;
     }
     // Return a new Matrix a-b
@@ -58,7 +63,7 @@ class Matrix {
     if (n instanceof Matrix) {
       // Matrices must be of the same size, otherwise addition is not possible.
       if (this.cols !== n.cols && this.rows !== n.rows) {
-        console.log("Matrices must be of the same size.");
+        console.log("Matrices must be of equal size");
         return undefined;
       }
       for (let i = 0; i < this.rows; ++i) {
@@ -87,7 +92,7 @@ class Matrix {
 
   static multiply(a, b) {
     if (a.cols !== b.rows) {
-      console.log("Columns of A must match ows of B");
+      console.log("Columns of A must match rows of B");
       return undefined;
     }
     let result = new Matrix(a.rows, b.cols);

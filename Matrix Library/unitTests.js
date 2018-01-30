@@ -1,4 +1,5 @@
 // QUnit unit testing for the matrix.js file's functionalities.
+// Created: January 2018.
 
 // 1. Test scalar addition functionality
 // 2. Test matrix addition functionality
@@ -31,6 +32,7 @@ QUnit.test(`Matrix addition test (scalar addition by ${scalar2})`, (assert) => {
 	a.data[1] = [4, 5, 6];
 	a.data[2] = [7, 8, 9];
 	a.add(scalar2);
+
 	let expected = new Matrix(3, 3);
 	expected.data[0] = [2, 3, 4];
 	expected.data[1] = [5, 6, 7];
@@ -66,7 +68,7 @@ QUnit.test(`Matrix addition test (scalar addition of indentity matrix by ${scala
 	expected.data[0] = [1, 1];
 	expected.data[1] = [1, 1];
 
-	assert.notDeepEqual(a, expected, "Matrices correctly defined as not being equal following addition");
+	assert.notDeepEqual(a, expected, "Matrices correctly defined as not being equal following addition negation test");
 });
 
 // 2. Test matrix addition functionality --------------------------------------
@@ -107,7 +109,7 @@ QUnit.test("Matrix addition test (matrix addition by indentity matrix)", (assert
 	assert.deepEqual(a, expected, "Matrix addition by identity matrix correctly performed");
 });
 
-QUnit.test("Matrix addition test (n x m matrix addition by n x m matrix)", (assert) => {
+QUnit.test("Matrix addition test ((n x m matrix) + (n x m matrix))", (assert) => {
 	let a = new Matrix(2, 3);
 	a.randomize();
 	let b = new Matrix(2, 3);
@@ -116,7 +118,7 @@ QUnit.test("Matrix addition test (n x m matrix addition by n x m matrix)", (asse
 	assert.deepEqual(a.add(b), undefined, "Matrix size correctly defined as being incorrect");
 });
 
-QUnit.test("Matrix addition test (n x m matrix addition by m x n matrix)", (assert) => {
+QUnit.test("Matrix addition test ((n x m matrix) + (m x n matrix))", (assert) => {
 	let a = new Matrix(2, 3);
 	a.data[0] = [5, 0, 0];
 	a.data[1] = [5, 2, 8];
@@ -169,7 +171,7 @@ QUnit.test("Matrix subtraction test (matrix subtraction by indentity matrix)", (
 	assert.deepEqual(result, expected, "Matrix subtraction by identity matrix correctly performed");
 });
 
-QUnit.test("Matrix subtraction test (n x m matrix subtraction by n x m matrix)", (assert) => {
+QUnit.test("Matrix subtraction test ((n x m matrix) - (n x m matrix))", (assert) => {
 	let a = new Matrix(2, 3);
 	a.randomize();
 	let b = new Matrix(3, 2);
@@ -178,7 +180,7 @@ QUnit.test("Matrix subtraction test (n x m matrix subtraction by n x m matrix)",
 	assert.deepEqual(Matrix.subtract(a, b), undefined, "Matrix size correctly defined as being incorrect");
 });
 
-QUnit.test("Matrix subtraction test (n x m matrix subtraction by m x n matrix)", (assert) => {
+QUnit.test("Matrix subtraction test ((n x m matrix) - (m x n matrix))", (assert) => {
 	let a = new Matrix(2, 3);
 	a.data[0] = [5, 0, 0];
 	a.data[1] = [5, 2, 8];
@@ -199,7 +201,7 @@ QUnit.test("Matrix subtraction test (n x m matrix subtraction by m x n matrix)",
 QUnit.module("4. matrix.js - scalar multiply");
 
 let scalar5 = 0;
-QUnit.test(`Matrix multiplication test (scalar multiplication by ${scalar5})`, (assert) => {
+QUnit.test(`Matrix multiplication test (random matrix multiplied by scalar ${scalar5})`, (assert) => {
 	let a = new Matrix(7, 3);
 	a.randomize();
 	a.multiply(scalar5);
@@ -209,7 +211,7 @@ QUnit.test(`Matrix multiplication test (scalar multiplication by ${scalar5})`, (
 });
 
 let scalar6 = 2;
-QUnit.test(`Matrix multiplication test (scalar multiplication of indentity matrix by ${scalar6})`, (assert) => {
+QUnit.test(`Matrix multiplication test (indentity matrix multiplied by scalar ${scalar6})`, (assert) => {
 	let scalar = 2;
 	let a = new Matrix(5, 5);
 	a.data[0] = [1, 1, 1, 1, 1];
@@ -230,7 +232,7 @@ QUnit.test(`Matrix multiplication test (scalar multiplication of indentity matri
 });
 
 let scalar7 = 3.5;
-QUnit.test(`Matrix multiplication test (scalar multiplication of random matrix by ${scalar7})`, (assert) => {
+QUnit.test(`Matrix multiplication test (specified matrix multiplied by scalar ${scalar7})`, (assert) => {
 	let a = new Matrix(2, 2);
 	a.data[0] = [2, 4];
 	a.data[1] = [-1, 3];
@@ -244,7 +246,7 @@ QUnit.test(`Matrix multiplication test (scalar multiplication of random matrix b
 });
 
 let scalar8 = 7;
-QUnit.test(`Matrix multiplication test (scalar multiplication of indentity matrix by ${scalar8}; negation test)`, (assert) => {
+QUnit.test(`Matrix multiplication test (indentity matrix multiplied by scalar ${scalar8}; negation test)`, (assert) => {
 	let a = new Matrix(2, 2);
 	a.data[0] = [1, 1];
 	a.data[1] = [1, 1];
@@ -254,7 +256,7 @@ QUnit.test(`Matrix multiplication test (scalar multiplication of indentity matri
 	expected.data[0] = [1, 1];
 	expected.data[1] = [1, 1];
 
-	assert.notDeepEqual(a, expected, "Matrices correctly defined as not being equal following multiplication");
+	assert.notDeepEqual(a, expected, "Matrices correctly defined as not being equal following multiplication negation test");
 });
 
 // 5. Test matrix multiplication functionality --------------------------------------
@@ -287,7 +289,7 @@ QUnit.test("Matrix multiplication test (matrix multiplication by indentity matri
 	assert.deepEqual(a, expected, "Matrix correctly multiplied by identity matrix");
 });
 
-QUnit.test("Matrix multiplication test (n x m matrix multiplication by n x m matrix)", (assert) => {
+QUnit.test("Matrix multiplication test ((n x m matrix) x (n x m matrix))", (assert) => {
 	let a = new Matrix(2, 3);
 	a.randomize();
 	let b = new Matrix(2, 3);
@@ -297,7 +299,7 @@ QUnit.test("Matrix multiplication test (n x m matrix multiplication by n x m mat
 	assert.deepEqual(a, undefined, "Matrix size correctly defined as being incorrect");
 });
 
-QUnit.test("Matrix multiplication test (n x m matrix multiplication by m x n matrix)", (assert) => {
+QUnit.test("Matrix multiplication test ((n x m matrix) x (m x n matrix))", (assert) => {
 	let a = new Matrix(2, 3);
 	a.data[0] = [5, 0, 0];
 	a.data[1] = [5, 2, 8];
@@ -332,6 +334,24 @@ QUnit.test("Matrix transposition test", (assert) => {
 
 // 7. Test matrix map functionality --------------------------------------------
 QUnit.module("7. matrix.js - matrix map");
+
+QUnit.test("Matrix map test (sigmoid function)", (assert) => {
+	function sigmoid(x) {
+		return 1 / (1 + Math.exp(-x));
+	}
+
+	let a = new Matrix(2, 2);
+	a.data[0] = [1, 4];
+	a.data[1] = [3, -2];
+
+	a.map(sigmoid);
+
+	let expected = new Matrix(2, 2);
+	expected.data[0] = [0.7310585786300049, 0.9820137900379085];
+	expected.data[1] = [0.9525741268224334, 0.11920292202211755];
+
+	assert.deepEqual(a, expected, "Matrix correctly mapped by a function");
+});
 
 // 8. Test matrix toArray functionality  ---------------------------------------
 QUnit.module("8. matrix.js - matrix toArray");
