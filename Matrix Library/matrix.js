@@ -113,7 +113,10 @@ class Matrix {
   // Scalar product
   for (let i = 0; i < this.rows; ++i) {
     for (let j = 0; j < this.cols; ++j) {
-        this.data[i][j] *= n;
+      this.data[i][j] *= n;
+        if (this.data[i][j] === -0) {
+          this.data[i][j] = 0;
+        }
       }
     }
   }
@@ -131,4 +134,12 @@ class Matrix {
   print() {
     console.table(this.data);
   }
+}
+
+// exception handling allows for both QUnit and Jest unit tests to be run from the same sourec file
+try {
+  module.exports = Matrix;
+}
+catch(e) {
+  console.log("QUnit does not need to add modules: " + e);
 }
