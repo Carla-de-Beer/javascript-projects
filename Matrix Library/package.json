@@ -1,8 +1,15 @@
 {
   "name": "matrixlibrary",
   "version": "1.0.0",
-  "description": "Matrix library",
-  "main": "matrix.test.js",
+  "description": "Matrix Library",
+  "main": "test/matrix.test.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "jest": "^22.3.0"
+  },
+  "devDependencies": {},
   "scripts": {
     "test": "jest"
   },
@@ -11,17 +18,8 @@
     "url": "https://github.com/Carla-de-Beer/JavaScript/tree/master/Matrix%20Library"
   },
   "keywords": [
-    "matrix",
-    "linear algebra",
-    "tests"
+    "matrix"
   ],
   "author": "cadebe",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/Carla-de-Beer/JavaScript/issues"
-  },
-  "homepage": "https://github.com/Carla-de-Beer/JavaScript/tree/master/Matrix%20Library#readme",
-  "devDependencies": {
-    "jest": "^22.3.0"
-  }
+  "license": "MIT"
 }
