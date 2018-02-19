@@ -1,0 +1,29 @@
+{
+  "name": "matrix-library",
+  "version": "1.0.0",
+  "description": "Matrix library",
+  "main": "/test/matrix.test.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "jest": "^22.3.0"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Carla-de-Beer/JavaScript.git"
+  },
+  "keywords": [
+    "matrix"
+  ],
+  "author": "cadebe",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Carla-de-Beer/JavaScript/issues"
+  },
+  "homepage": "https://github.com/Carla-de-Beer/JavaScript#readme"
+}
