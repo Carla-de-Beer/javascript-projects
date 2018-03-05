@@ -10,6 +10,7 @@
 // G. Test matrix map functionality
 // H. Test matrix toArray functionality
 // I. Test matrix fromArray functionality
+// J. Identiy matrix functionality
 
 const Matrix = require("../matrix");
 
@@ -378,4 +379,14 @@ test("24. Matrix fromArray test", () => {
 	expected.data[5] = [7.5];
 
   expect(Matrix.fromArray(array)).toEqual(expected);
+});
+
+// I. Test matrix fromArray functionality  -------------------------------------
+test("25. Identiy matrix test", () => {
+	let expected = new Matrix(3, 3);
+	expected.data[0] = [1, 1, 1];
+	expected.data[1] = [1, 1, 1];
+	expected.data[2] = [1, 1, 1];
+
+  expect(Matrix.createIdentityMatrix(3)).toEqual(expected);
 });

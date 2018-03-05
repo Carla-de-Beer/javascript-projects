@@ -131,6 +131,16 @@ class Matrix {
     }
   }
 
+  static createIdentityMatrix(size) {
+      let matrix = new Matrix(size, size);
+      for (let i = 0; i < matrix.rows; ++i) {
+        for (let j = 0; j < matrix.cols; ++j) {
+          matrix.data[i][j] = 1;
+        }
+      }
+      return matrix;
+  }
+
   print() {
     console.table(this.data);
   }

@@ -10,6 +10,7 @@
 // G. Test matrix map functionality
 // H. Test matrix toArray functionality
 // I. Test matrix fromArray functionality
+// J. Identiy matrix functionality
 
 // A. Test scalar summation functionality --------------------------------------
 QUnit.module("1. matrix.js - scalar addition");
@@ -379,4 +380,16 @@ QUnit.test("Matrix fromArray test", (assert) => {
 	expected.data[5] = [7.5];
 
 	assert.deepEqual(Matrix.fromArray(array), expected, "Array correctly converted to n x 1 matrix");
+});
+
+// J. Test identity matrix functionality  -------------------------------------
+QUnit.module("10. matrix.js - identity matrix");
+
+QUnit.test("Identity matrix test", (assert) => {
+	let expected = new Matrix(3, 3);
+	expected.data[0] = [1, 1, 1];
+	expected.data[1] = [1, 1, 1];
+	expected.data[2] = [1, 1, 1];
+
+	assert.deepEqual(Matrix.createIdentityMatrix(3), expected, "Identity matrix correctly created");
 });
