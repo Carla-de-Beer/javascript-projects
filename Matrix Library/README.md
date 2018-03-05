@@ -1,10 +1,10 @@
-# Matrix Library #
+# Matrix Library[![Build Status](https://circleci.com/gh/Carla-de-Beer/JavaScript.png?&style=shield&circle-token=:circle-token)](https://circleci.com/gh/Carla-de-Beer/JavaScript)
 
 A basic library that implements a few essential matrix operations.
 
 Based on the examples by Daniel Shiffman:
 https://www.youtube.com/user/shiffman/videos
 
-Unit tests, under the `test` folder, are built with the Jest testing engine. Note that Jest runs in a Node environment, so you won't have access to the DOM. Ensure a current version of Node is installed, install Jest and run the unit tests with the command `npm test`.
+Unit tests, under the `test` folder, are built with the Jest testing engine. Note that Jest runs in a Node environment, so you won't have access to the DOM. Ensure a current version of Node is installed, install Jest and run the unit tests with the command `npm test`. Continuous integration is effected by means of CircleCI.
 
-If you need to run unit tests with the DOM, there are also examples of QUnit unit tests provided with this library under the `test` folder. Just run the `QUnitTests.html` with a local server: `http://127.0.0.1:<port number>/tests/QUnitTests.html`
+If you need to run unit tests with the DOM, there are also examples of QUnit unit tests provided with this library under the `test` folder. Just run the `QUnitTests.html` with a local server: `http://127.0.0.1:<port number>/tests/QUnitTests.html`.
