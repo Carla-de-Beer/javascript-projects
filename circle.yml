@@ -1,0 +1,6 @@
+general:
+  build_dir: MatrixLibrary
+
+machine:
+  node:
+    version: 8.9.4
