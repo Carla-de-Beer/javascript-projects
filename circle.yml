@@ -1,5 +1,5 @@
 general:
-  build_dir: MatrixLibrary
+  build_dir: Matrix Library
 
 machine:
   node:
