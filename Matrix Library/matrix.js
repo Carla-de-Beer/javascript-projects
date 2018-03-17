@@ -110,12 +110,12 @@ class Matrix {
   }
 
   multiply(n) {
-  // Scalar product
-  for (let i = 0; i < this.rows; ++i) {
-    for (let j = 0; j < this.cols; ++j) {
-      this.data[i][j] *= n;
-        if (this.data[i][j] === -0) {
-          this.data[i][j] = 0;
+    // Scalar product
+    for (let i = 0; i < this.rows; ++i) {
+      for (let j = 0; j < this.cols; ++j) {
+        this.data[i][j] *= n;
+        if (Object.is(-0, this.data[i][j])) {
+          this.data[i][j] = +0;
         }
       }
     }
@@ -132,13 +132,13 @@ class Matrix {
   }
 
   static createIdentityMatrix(size) {
-      let matrix = new Matrix(size, size);
-      for (let i = 0; i < matrix.rows; ++i) {
-        for (let j = 0; j < matrix.cols; ++j) {
-          matrix.data[i][j] = 1;
-        }
+    let matrix = new Matrix(size, size);
+    for (let i = 0; i < matrix.rows; ++i) {
+      for (let j = 0; j < matrix.cols; ++j) {
+        matrix.data[i][j] = 1;
       }
-      return matrix;
+    }
+    return matrix;
   }
 
   print() {
@@ -149,7 +149,6 @@ class Matrix {
 // exception handling allows for both QUnit and Jest unit tests to be run from the same sourec file
 try {
   module.exports = Matrix;
-}
-catch(e) {
+} catch (e) {
   console.log("QUnit does not need to add modules: " + e);
 }
