@@ -6,5 +6,5 @@ Based on: https://taylodl.wordpress.com/2012/06/13/functional-javascript-memoiza
 
 </br>
 <p align="center">
-  <img src="images/screenShot.png/>
+  <img src="images/screenShot.png"/>
 </p>
