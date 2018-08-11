@@ -6,14 +6,16 @@
   "directories": {
     "test": "tests"
   },
+  "jest": {
+    "verbose": true,
+    "testURL": "http://localhost/"
+  },
   "dependencies": {},
   "devDependencies": {
-    "eslint": "^4.19.0",
-    "jest": "^22.3.0"
+    "jest": "^22.4.4"
   },
   "scripts": {
-    "test": "jest",
-    "lint": "./node_modules/.bin/eslint *.js"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
