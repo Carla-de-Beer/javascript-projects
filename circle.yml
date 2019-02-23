@@ -12,16 +12,5 @@ jobs:
     steps:
       - checkout
 
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-            - v1-dependencies-
-
-      - run: npm install
-
-      - save_cache:
-          paths:
-
-      - run:
 
 
