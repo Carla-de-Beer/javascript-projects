@@ -17,8 +17,6 @@ jobs:
           keys:
             - v1-dependencies-
 
-      - run: npm install
-
       - save_cache:
           paths:
 
