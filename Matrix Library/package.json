@@ -1,21 +1,14 @@
 {
   "name": "matrix-library",
   "version": "1.0.0",
-  "description": "Matrix library",
+  "description": "Matrix Library",
   "main": "/test/matrix.test.js",
   "directories": {
     "test": "tests"
   },
-  "jest": {
-    "verbose": true,
-    "testURL": "http://localhost/"
-  },
-  "dependencies": {},
-  "devDependencies": {
-    "jest": "^22.4.4"
-  },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "lint": "./node_modules/.bin/eslint matrix.js"
   },
   "repository": {
     "type": "git",
@@ -29,5 +22,9 @@
   "bugs": {
     "url": "https://github.com/Carla-de-Beer/JavaScript/issues"
   },
-  "homepage": "https://github.com/Carla-de-Beer/JavaScript#readme"
+  "homepage": "https://github.com/Carla-de-Beer/JavaScript#readme",
+  "devDependencies": {
+    "eslint": "^5.14.1",
+    "jest": "^24.1.0"
+  }
 }

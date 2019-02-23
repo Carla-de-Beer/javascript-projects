@@ -28,7 +28,7 @@ class Matrix {
   static subtract(a, b) {
     // Matrices must be of the same size, otherwise subtraction is not possible.
     if (a.cols !== b.cols && a.rows !== b.rows) {
-      console.log("Matrices must be of equal size");
+      console.log("Matrices must be of equal size"); // eslint-disable-line no-console
       return undefined;
     }
     // Return a new Matrix a-b
@@ -63,7 +63,7 @@ class Matrix {
     if (n instanceof Matrix) {
       // Matrices must be of the same size, otherwise addition is not possible.
       if (this.cols !== n.cols && this.rows !== n.rows) {
-        console.log("Matrices must be of equal size");
+        console.log("Matrices must be of equal size"); // eslint-disable-line no-console
         return undefined;
       }
       for (let i = 0; i < this.rows; ++i) {
@@ -92,7 +92,7 @@ class Matrix {
 
   static multiply(a, b) {
     if (a.cols !== b.rows) {
-      console.log("Columns of A must match rows of B");
+      console.log("Columns of A must match rows of B"); // eslint-disable-line no-console
       return undefined;
     }
     let result = new Matrix(a.rows, b.cols);
@@ -142,13 +142,13 @@ class Matrix {
   }
 
   print() {
-    console.table(this.data);
+    console.table(this.data); // eslint-disable-line no-console
   }
 }
 
 // exception handling allows for both QUnit and Jest unit tests to be run from the same sourec file
 try {
-  module.exports = Matrix;
+  module.exports = Matrix; // eslint-disable-line no-undef
 } catch (e) {
-  console.log("QUnit does not need to add modules: " + e);
+  console.log("QUnit does not need to add modules: " + e); // eslint-disable-line no-console
 }
