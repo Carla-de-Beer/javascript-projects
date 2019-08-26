@@ -14,5 +14,5 @@ Resources:
 * Chart library: https://www.chartjs.org.
 
 <p align="center">
-  <img src="images/screenShot-02.png"/>
+  <img src="images/Screenshot-02.png"/>
 </p>
