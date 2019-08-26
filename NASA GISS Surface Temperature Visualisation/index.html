@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>NASA Temperature Visualisation</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+  <script src="scriptFile.js"></script>
+
+  <style>
+    body {
+      margin: 35px;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    a {
+      font-size: 0.85rem;
+      color: dimgray;
+    }
+
+    canvas {
+      margin: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <a href="https://data.giss.nasa.gov/gistemp/">NASA GISS Surface Temperature Analysis (GISTEMP v4)</a>
+  <canvas id="chart"></canvas>
+</body>
+
+</html>
