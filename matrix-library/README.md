@@ -1,5 +1,5 @@
 # Matrix Library
-[![Build Status](https://circleci.com/gh/Carla-de-Beer/JavaScript.png?&style=shield&circle-token=:circle-token)](https://circleci.com/gh/Carla-de-Beer/JavaScript)
+[![Build Status](https://circleci.com/gh/Carla-de-Beer/javaScript-projects.png?&style=shield&circle-token=:circle-token)](https://circleci.com/gh/Carla-de-Beer/javaScript-projects)
 
 A basic library that implements a few essential matrix operations.
 

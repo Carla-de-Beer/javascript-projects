@@ -1,6 +1,6 @@
 # JavaScript Projects
+[![Build Status](https://circleci.com/gh/Carla-de-Beer/javaScript-projects.png?&style=shield&circle-token=:circle-token)](https://circleci.com/gh/Carla-de-Beer/javaScript-projects)
 
-[![Build Status](https://circleci.com/gh/Carla-de-Beer/JavaScript-Projects.png?&style=shield&circle-token=:circle-token)](https://circleci.com/gh/Carla-de-Beer/JavaScript-Projects)
 [![GitHub issues](https://img.shields.io/github/issues/Carla-de-Beer/JavaScript-Projects.svg?style=flat-square)](https://github.com/Carla-de-Beer/JavaScript-Projects/issues)
 
 This repository contains a number of JavaScript projects.
